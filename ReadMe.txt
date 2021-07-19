@@ -19,6 +19,7 @@ group during registration.
 
 3. Hospital ‘Add blood info’ page - A hospital, once logged in, should be able to add details of available
 blood samples (along with type) to their bank. Access to this page should be restricted only to hospitals.
+(done)
 
 4. ‘Available blood samples’ page - There should be a page that displays all the available blood samples
 along with which hospital has them and a ‘Request Sample’ button. This page should be accessible to
