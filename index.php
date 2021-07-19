@@ -29,4 +29,29 @@
 </body>
 <!-- body ends here -->
 
+<script>
+$(function() {
+    $('#show-blood-bank-data-btn').click(function(e) {
+        e.preventDefault();
+        console.log('i m here');
+        
+        $.ajax({
+            type: 'POST',
+            url: './backend/getAllBloodBanks.php',
+            success: function(data) {
+                window.location.href='/showAllBloodBankData.php';
+                console.log(data);
+            },
+            error: function(data) {
+                Swal.fire({
+                    'title': 'Errors',
+                    'text': 'There were errors while saving the data.',
+                    'type': 'error'
+                })
+            }
+        });
+    });
+});
+</script>
+
 </html>

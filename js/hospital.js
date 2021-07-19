@@ -12,15 +12,15 @@ $(function() {
 $(function(){
     $('#save-blood-bank-table').click(function(e){
         event.preventDefault();
-        var json = {'Ap':$( ".Ap" ).val(),'An':$( ".An" ).val()};
-        json.push({'Ap':$( ".Ap" ).val()});
-        json.push({'An':$( ".An" ).val()});
-        json.push({'Bp':$( ".Bp" ).val()});
-        json.push({'Bn':$( ".Bn" ).val()});
-        json.push({'Op':$( ".Op" ).val()});
-        json.push({'On':$( ".On" ).val()});
-        json.push({'ABp':$( ".ABp" ).val()});
-        json.push({'ABn':$( ".ABn" ).val()});
+        var json = {'Ap':$( ".Ap" ).val(),
+                    'An':$( ".An" ).val(),
+                    'Bp':$( ".Bp" ).val(),
+                    'Bn':$( ".Bn" ).val(),
+                    'Op':$( ".Op" ).val(),
+                    'On':$( ".On" ).val(),
+                    'ABp':$( ".ABp" ).val(),
+                    'ABn':$( ".ABn" ).val()
+                };
         var blood_grps = JSON.stringify(json);
         console.log(json);
         $( ".blood-group" ).attr("readonly",true);

@@ -153,3 +153,12 @@ $(function() {
         }
     });
 });
+
+$(function() {
+    $('#show-blood-bank-data-btn').click(function(e) {
+        console.log('i m here');
+        e.preventDefault();
+        window.location.href='/showAllBloodBankData.php';
+        
+    });
+});
