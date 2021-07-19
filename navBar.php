@@ -39,11 +39,11 @@
                     <h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form class="modal-body">
+                    <div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="sign-in-type" class="form-label">Sign In Type</label>
@@ -57,12 +57,13 @@
                             <label for="sign-in-password" class="form-label" placeholder="Password">Password</label>
                             <input type="password" id="sign-in-password" class="form-control" aria-describedby="passwordHelpInline" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="sign-in-btn">Sign In</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="sign-in-btn">Sign In</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

@@ -4,8 +4,8 @@ require_once('config.php');
 <?php
 
 if(isset($_POST)){
-	$hospitalName 		= $_POST['hospitalName'];
-	$name 		= $_POST['name'];
+	$hospitalName 	= $_POST['hospitalName'];
+	$name 			= $_POST['name'];
 	$email 			= $_POST['email'];
 	$password 		= $_POST['password'];
 	$phonenumber	= $_POST['phoneNumber'];

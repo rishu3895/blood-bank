@@ -29,7 +29,7 @@ $(function() {
             var password = $('#sign-in-password').val();
             console.log(email,signInType);
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: './backend/signIn.php',
                 data: {
                     email: email,

@@ -9,18 +9,22 @@ if(isset($_POST)){
 	$password 		= $_POST['password'];
     $sql = "";
 	if($signInType == "Hospital"){
-        $sql = "SELECT email,password FROM `HospitalUsers` WHERE email=:$email";
+        $sql = "SELECT email,password FROM `HospitalUsers` WHERE email=? LIMIT 1";
     }else{
-        $sql = "SELECT email,password FROM `ReceiverUsers` WHERE email=:$email";
+        $sql = "SELECT email,password FROM `ReceiverUsers` WHERE email=? LIMIT 1";
     }
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        if($row['password'] == $password){
-            echo 'Successfully logged In';
-        } 
+    $stmtsearch = $db->prepare($sql);
+    $stmtsearch->execute([$email]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if(!empty($result)){
+        if($result['password']==$password){
+            echo ' You are logged in ';
+        }else{
+            echo ' The password was wrong';
+        }
     }else{
-        echo 'There were errors while saving the data.';
+        echo 'The User Id was wrong';
     }
 }else{
 	echo 'No data';
