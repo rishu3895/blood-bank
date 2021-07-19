@@ -26,6 +26,9 @@
             <button type="button" class="btn btn-primary sign-in-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Sign in
             </button>
+            <button type="button" class="btn btn-primary home-btn" onclick="moveToHome()">
+                Home
+            </button>
         </form>
     </div>
     <!-- Modal -->

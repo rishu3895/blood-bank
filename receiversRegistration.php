@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<?php include("navBar.php");?>
+<?php include("navBarHome.php");?>
 <!-- Body Starts Here -->
 <body class="complete-body">
     <div class="card-body" style="width: 24rem;">
@@ -14,21 +14,21 @@
                 <label for="bloodGroup" class="form-label">Blood Group</label>
                 <select class="form-select" aria-label="Default select example" required id="blood-group">
                     <option selected>A+</option>
-                    <option value="1">A-</option>
-                    <option value="2">B+</option>
-                    <option value="3">B-</option>
-                    <option value="4">AB+</option>
-                    <option value="5">AB-</option>
-                    <option value="4">O+</option>
-                    <option value="5">O-</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value=AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="gender" class="form-label">Gender</label>
                 <select class="form-select" aria-label="Default select example" id="gender" required>
                     <option selected>Gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
                 </select>
             </div>
             <div class="mb-3">

@@ -17,7 +17,10 @@ function preventDefaults(){
     event.preventDefault();
 }
 
-
+function logOut(){
+    event.preventDefault();
+    window.location.href='/index.php';
+}
 $(function() {
     $('#sign-in-btn').click(function(e) {
         var valid = this.form.checkValidity();
@@ -37,7 +40,13 @@ $(function() {
                 },
                 success: function(data) {
                     if(data){
-                        console.log('Data');
+                        if(signInType == 'Hospital'){
+                            window.location.href='/hospitalHome.php';
+                        }else{
+                            window.location.href='/receiverHome.php';
+                        }
+                        
+                        console.log(data);
                         
                     }else{
                         console.log('Email or Password wrong')

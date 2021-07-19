@@ -2,7 +2,7 @@
 require_once('config.php');
 ?>
 <?php
-
+session_start();
 if(isset($_POST)){
 	$email 			= $_POST['email'];
     $signInType     = $_POST['signInType'];
@@ -19,14 +19,9 @@ if(isset($_POST)){
     
     if(!empty($result)){
         if($result['password']==$password){
-            $_SESSION['username'] = $row['email'];
+            $_SESSION['username'] = $email;
             $_SESSION['usertype'] = $signInType;
-            header("location:login_success.php");
-            // if($signInType == "Hospital"){
-            //     header('location:../hospitalHome.php');
-            // }else{
-            //     header('location:../receiverHome.php');
-            // }
+            
             echo ' You are logged in ';
             return true;
         }else{
