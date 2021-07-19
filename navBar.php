@@ -20,7 +20,7 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand">
-            <img class="logo blood-logo" src="./images/bloodBankIcon.png" />
+            <img class="logo blood-logo" src="./images/bloodBankIcon.png" alt="blood bank icon"/>
         </a>
         <form class="d-flex">
             <button type="button" class="btn btn-primary sign-in-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -39,11 +39,11 @@
                     <h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="modal-body">
-                    <div>
+                <form>
+                    <div  class="modal-body">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="example@mail.com" required>
+                            <label for="sign-in-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="sign-in-email" aria-describedby="emailHelp" placeholder="example@mail.com" required>
                         </div>
                         <div class="mb-3">
                             <label for="sign-in-type" class="form-label">Sign In Type</label>
@@ -63,12 +63,10 @@
                         <button type="submit" class="btn btn-primary" id="sign-in-btn">Sign In</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
     <!-- Modal End -->
 </nav>
 <!-- nav ends -->
-
 </html>

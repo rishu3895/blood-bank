@@ -17,17 +17,16 @@ function preventDefaults(){
     event.preventDefault();
 }
 
+
 $(function() {
     $('#sign-in-btn').click(function(e) {
-
         var valid = this.form.checkValidity();
 
         if (valid) {
             e.preventDefault();
             var email = $('#sign-in-email').val();
-            var signInType = $('sign-in-type').val();
+            var signInType = $('#sign-in-type').val();
             var password = $('#sign-in-password').val();
-            console.log(email,signInType);
             $.ajax({
                 type: 'POST',
                 url: './backend/signIn.php',
@@ -37,19 +36,12 @@ $(function() {
                     password: password
                 },
                 success: function(data) {
-                    Swal.fire({
-                        'title': 'Successful',
-                        'text': data,
-                        'type': 'success'
-                    })
-
-                },
-                error: function(data) {
-                    Swal.fire({
-                        'title': 'Errors',
-                        'text': 'There were errors while saving the data.',
-                        'type': 'error'
-                    })
+                    if(data){
+                        console.log('Data');
+                        
+                    }else{
+                        console.log('Email or Password wrong')
+                    }
                 }
             });
         } else {

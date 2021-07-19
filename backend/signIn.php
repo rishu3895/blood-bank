@@ -13,22 +13,30 @@ if(isset($_POST)){
     }else{
         $sql = "SELECT email,password FROM `ReceiverUsers` WHERE email=? LIMIT 1";
     }
-    $stmtsearch = $db->prepare($sql);
-    $stmtsearch->execute([$email]);
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$email]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if(!empty($result)){
         if($result['password']==$password){
+            $_SESSION['username'] = $row['email'];
+            $_SESSION['usertype'] = $signInType;
+            header("location:login_success.php");
+            // if($signInType == "Hospital"){
+            //     header('location:../hospitalHome.php');
+            // }else{
+            //     header('location:../receiverHome.php');
+            // }
             echo ' You are logged in ';
+            return true;
         }else{
-            echo ' The password was wrong';
+            return false;
         }
     }else{
         echo 'The User Id was wrong';
+        return false;
     }
 }else{
 	echo 'No data';
 }
-
-
 ?>
