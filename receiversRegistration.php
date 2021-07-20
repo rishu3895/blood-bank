@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
-<?php include("navBarHome.php");?>
+<?php include("navBar.php");?>
 <!-- Body Starts Here -->
-<body class="complete-body">
+<body class="complete-body" onload="navBarOnLoad(true,false,true,false);">
     <div class="card-body" style="width: 24rem;">
         <h5 class="card-title">Sign Up for receivers</h5>
         <form class="card-text">
