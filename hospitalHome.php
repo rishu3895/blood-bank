@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <?php include("navBar.php"); ?>
 <!-- Body Starts Here -->
-<?php
-    //login_success.php  
-    session_start();
-    if (isset($_SESSION["username"])) {
-        echo '<h6>Login Success, Welcome - ' . $_SESSION["username"] . $_SESSION["usertype"] . '</h6>';
-        echo '<br /><br /><a href="logout.php">Logout</a>';
-    }
-?>
 <body class="complete-body" onload="navBarOnLoad(false,true,false,false);getBloodGrpsForHospital();">
     <div class="card-body" style="width: 24rem;">
         <h5 class="card-title">Blood Samples Table</h5>
