@@ -26,7 +26,7 @@
         $stmt = sendRequest($sql);
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+        echo $result['id'];
         if(!empty($result)){
             if($result['password']==$password){
                 $_SESSION['username'] = $email;
@@ -158,22 +158,22 @@
     }
     // Send Blood Request
     function sendBloodReq($data){
+        session_start();
         $bloodGroup     = $data['bloodGrp'];
-        $hospitalName   = $data['hospitalName'];
+        $hospitalId   = $data['hospitalName'];
         $bloodQty       = $data['bloodQty'];
-        $user           = $_SESSION['username'];
+        $userId           = $_SESSION['id'];
         
-        if(!checkUser($email,"Receiver")){
-            echo "User Already exists, Please change the email";
-            return null;
+        if(empty($userId)){
+            return ;
         }
 
-        $sql = "INSERT INTO ReceiverUsers(name, email, password, age, bloodGroup, PhoneNumber, gender) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO `BloodSampleRequests`(`HospitalUser`, `ReceiverUser`, `BloodType`, `Quantity`) VALUES (?,?,?,?)";
         $stmt = sendRequest($sql);
-        $result = $stmt->execute([]);
+        $result = $stmt->execute([$hospitalId, $userId, $bloodGroup, $bloodQty]);
         if($result){
-            echo 'Successfully saved.';
+            echo 'Request Successfully sent.';
         }else{
-            echo 'There were errors while saving the data.';
+            echo 'There were errors while requesting the blood group.';
         }
     }

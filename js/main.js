@@ -24,8 +24,9 @@ function sendBloodReq(){
 //This function will be called when Request btn will be clicked with user logged in 
 function sendBloodRequ(){
     event.preventDefault();
-    var func2calll = 'sendBloodReq';
+    var function2call = 'sendBloodReq';
     var hospitalName = $('#hospital-list').val();
+    console.log(hospitalName);
     var bloodGrp = $('#blood-group-list').val();
     var bloodQty = $('#blood-quantity').val();
     $.ajax({
@@ -286,7 +287,7 @@ function addBloodGroupDetails(arr, selector) {
                 <label for="blood-group-${value.BloodGroup}" class="form-label">${value.BloodGroup}</label>
             </th>
             <td>
-                <input type="number" id="${value.BloodGroupName}" class="form-control blood-group ${value.BloodGroupName}" value="${value.Quantity}"  readonly="true"/>
+                <input type="number" class="form-control blood-group ${value.BloodGroupName}" value="${value.Quantity}"  readonly="true"/>
             </td>
         </tr>`);
         selector.append($newRow);

@@ -32,6 +32,7 @@ If the user is not logged in, then he/she should be redirected to the login
 page. 
 If a user is logged in as a hospital, then the user should not be allowed to request for a blood
 sample.
+(done)
 
 5. Hospital ‘View requests’ page - Hospitals should be able to see the list of all the receivers who have
 requested a particular blood group from its blood bank.
