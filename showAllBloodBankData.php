@@ -2,9 +2,7 @@
 
 <?php include("navBar.php");?>
 
-<body class="complete-body" onload="navBarOnLoad(true,false,true,false);getAllBloodGrps();">
-    
+<body class="complete-body" onload="navBarOnLoad(true,false,true,false);getAllBloodGrps('disabled');"> 
 </body>
-
 
 </html>

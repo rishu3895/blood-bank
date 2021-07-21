@@ -4,7 +4,7 @@
     function sendRequest($sql){
         $db_host = "localhost";
         $db_user = "root";
-        $db_pass = "Qwerty@12345";
+        $db_pass = "abc@123";
         $db_name = "Users";
         $db = new PDO('mysql:host='.$db_host.';dbname=' . $db_name . ';charset=utf8', $db_user, $db_pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -42,6 +42,23 @@
             return false;
         }
     }
+    function checkUser($email, $signInType){
+        $sql = "";
+        if($signInType == "Hospital"){
+            $sql = "SELECT email,password FROM `HospitalUsers` WHERE email=? LIMIT 1";
+        }else{
+            $sql = "SELECT email,password FROM `ReceiverUsers` WHERE email=? LIMIT 1";
+        }
+        
+        $stmt = sendRequest($sql);
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(empty($result)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     // Register hospital User
     function processHospitalUser($data){
         
@@ -51,6 +68,12 @@
         $password 		= $data['password'];
         $phonenumber	= $data['phoneNumber'];
         $bloodGrps = array('Ap' => "0" , 'An' => "0", 'Bp' => '0','Bn'=>'0','Op'=>'0','On'=>'0','ABp'=>'0','ABn'=>'0');
+        
+        if(!checkUser($email,"Hospital")){
+            echo "User Already exists, Please change the email";
+            return null;
+        }
+
         $json = json_encode($bloodGrps);
         $sql = "INSERT INTO HospitalUsers (HospitalName,name, email, password,  PhoneNumber, BloodGroupsAvailable) VALUES (?,?,?,?,?,?)";
         
@@ -72,6 +95,11 @@
         $password 		= $data['password'];
         $phonenumber	= $data['phoneNumber'];
         
+        if(!checkUser($email,"Receiver")){
+            echo "User Already exists, Please change the email";
+            return null;
+        }
+
         $sql = "INSERT INTO ReceiverUsers(name, email, password, age, bloodGroup, PhoneNumber, gender) VALUES (?,?,?,?,?,?,?)";
         $stmt = sendRequest($sql);
         $result = $stmt->execute([$name,$email,$password,$age,$bloodGroup,$phonenumber,$gender]);
