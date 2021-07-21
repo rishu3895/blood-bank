@@ -13,6 +13,7 @@ require_once('processRequests.php');
                 case 'saveBloodGrps'        : saveBloodGrps($data)       ;break;
                 case 'getAllBloodGrps'      : getAllBloodGrps($data)     ;break;
                 case 'getAllBloodBanks'     : getAllBloodBanks($data)    ;break;
+                case 'sendBloodReq'         : sendBloodReq($data)        ;break;
             }
         }
         

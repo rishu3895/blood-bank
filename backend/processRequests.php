@@ -18,9 +18,9 @@
         $password 		= $data['password'];
         $sql = "";
         if($signInType == "Hospital"){
-            $sql = "SELECT email,password FROM `HospitalUsers` WHERE email=? LIMIT 1";
+            $sql = "SELECT id,email,password FROM `HospitalUsers` WHERE email=? LIMIT 1";
         }else{
-            $sql = "SELECT email,password FROM `ReceiverUsers` WHERE email=? LIMIT 1";
+            $sql = "SELECT id,email,password FROM `ReceiverUsers` WHERE email=? LIMIT 1";
         }
         
         $stmt = sendRequest($sql);
@@ -31,7 +31,7 @@
             if($result['password']==$password){
                 $_SESSION['username'] = $email;
                 $_SESSION['usertype'] = $signInType;
-                
+                $_SESSION['id'] =  $result['id'];
                 echo ' You are logged in ';
                 return true;
             }else{
@@ -144,7 +144,7 @@
     }
     // Retrieve all blood bank details
     function getAllBloodBanks($data){
-        $sql = "SELECT email,HospitalName, BloodGroupsAvailable FROM HospitalUsers";
+        $sql = "SELECT id,email,HospitalName, BloodGroupsAvailable FROM HospitalUsers";
         $stmt = sendRequest($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -154,5 +154,26 @@
         } else {
             echo 'No data';
             return false;
+        }
+    }
+    // Send Blood Request
+    function sendBloodReq($data){
+        $bloodGroup     = $data['bloodGrp'];
+        $hospitalName   = $data['hospitalName'];
+        $bloodQty       = $data['bloodQty'];
+        $user           = $_SESSION['username'];
+        
+        if(!checkUser($email,"Receiver")){
+            echo "User Already exists, Please change the email";
+            return null;
+        }
+
+        $sql = "INSERT INTO ReceiverUsers(name, email, password, age, bloodGroup, PhoneNumber, gender) VALUES (?,?,?,?,?,?,?)";
+        $stmt = sendRequest($sql);
+        $result = $stmt->execute([]);
+        if($result){
+            echo 'Successfully saved.';
+        }else{
+            echo 'There were errors while saving the data.';
         }
     }

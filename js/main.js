@@ -24,10 +24,38 @@ function sendBloodReq(){
 //This function will be called when Request btn will be clicked with user logged in 
 function sendBloodRequ(){
     event.preventDefault();
-    var valid = this.form.checkValidity();
-    if(valid){
-        console.log('logged');
-    }
+    var func2calll = 'sendBloodReq';
+    var hospitalName = $('#hospital-list').val();
+    var bloodGrp = $('#blood-group-list').val();
+    var bloodQty = $('#blood-quantity').val();
+    $.ajax({
+        type:'POST',
+        url: './backend/controller.php',
+        data:{
+            function2call: function2call,
+            data:{
+                hospitalName:hospitalName,
+                bloodGrp:bloodGrp,
+                bloodQty:bloodQty
+            },
+        },
+        success: function (data) {
+            Swal.fire({
+                'title': 'Successful',
+                'text': data,
+                'type': 'success'
+            })
+
+        },
+        error: function (data) {
+            Swal.fire({
+                'title': 'Errors',
+                'text': 'There were errors while requesting the blood group.',
+                'type': 'error'
+            })
+        }
+
+    });
 
 }
 //This function is used to preventDefaults
@@ -264,9 +292,9 @@ function addBloodGroupDetails(arr, selector) {
         selector.append($newRow);
     });
 }
-function createBloodGroupTable(a, email, HospitalName, selector) {
+function createBloodGroupTable(a, email, hospitalName, selector) {
     var newTable = $(`<div class="card-body" style="width: 24rem;">
-                        <h5 class="card-title" id="${email}">${HospitalName}</h5>
+                        <h5 class="card-title" id="${email}">${hospitalName}</h5>
                         <form class="card-text">
                             <table class="table table-hover" id="hospital-blood-group">
                                 <thead>
@@ -312,7 +340,7 @@ function createRequestForm(selector,hospitals,disable,onclickfunc){
 
     var newForm = $(`<div class="card-body" style="width: 24rem;">
                         <h5 class="card-title">Request for blood sample</h5>
-                        <form class="card-text" >
+                        <form class="card-text" onsubmit="${onclickfunc}">
                             <div class="mb-3">
                                 <label for="hospital" class="form-label">Select Hospital</label>
                                 <select class="form-select hospitals-list" aria-label="Default select example" required id="hospital-list" ${disable} >
@@ -337,14 +365,14 @@ function createRequestForm(selector,hospitals,disable,onclickfunc){
                                 <label for="blood-quantity" class="form-label">Blood Quantity</label>
                                 <input id="blood-quantity" class="form-control blood-quantity" required ${disable}/>
                             </div>
-                            <button type="submit" class="btn btn-primary send-blood-request" id="sendBloodRequest" onclick="${onclickfunc}">Send Request</button>
+                            <button type="submit" class="btn btn-primary send-blood-request" id="sendBloodRequest">Send Request</button>
                         </form>
                     </div>`);
     selector.append(newForm);
 
     var sel = $("#hospital-list");
     $.each(hospitals, function(index,value){
-        var newOption = $(`<option value="${value}">${value}</option>`);
+        var newOption = $(`<option value="${value.hospitalId}">${value.hospitalName}</option>`);
         sel.append(newOption);
     });
 
@@ -415,11 +443,14 @@ function handleAllJson(data,disable) {
     //console.log(json);
     for (var a in json) {
         var email = json[a].email;
-        var HospitalName = json[a].HospitalName;
-        hospitals.push(HospitalName);
+        var hospitalName = json[a].HospitalName;
+        console.log(hospitalName);
+        var hospitalId = json[a].id;
+        var hos = {hospitalName:hospitalName, hospitalId:hospitalId};
+        hospitals.push(hos);
         var bloodGroupsAv = json[a].BloodGroupsAvailable;
         var selector = $('.complete-body');
-        createBloodGroupTable(a, email, HospitalName, selector);
+        createBloodGroupTable(a, email, hospitalName, selector);
 
         var selector1 = $(`#hospital-blood-group-table-${a}`);
         var arr = getBloodGroupArray(JSON.parse(bloodGroupsAv));
