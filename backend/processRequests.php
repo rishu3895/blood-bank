@@ -117,14 +117,12 @@
     // Retrieve all blood bank details
     function getAllBloodBanks($data){
         $sql = "SELECT email,HospitalName, BloodGroupsAvailable FROM HospitalUsers";
-        $stmt = $db->prepare($sql);
+        $stmt = sendRequest($sql);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         if(!empty($result)){
-            $_SESSION['HospitalName']=$result['HospitalName'];
-            echo $result['BloodGroupsAvailable'];
-            return $result['BloodGroupsAvailable'];
+            echo json_encode($result);
         } else {
             echo 'No data';
             return false;

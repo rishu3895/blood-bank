@@ -1,27 +1,42 @@
+//This function redirects to hospitalRegistration page
 function moveToHosReg() {
     event.preventDefault();
     window.location.href="/hospitalRegistration.php";
 }
 
+//This function redirects to receiversRegistration page
 function moveToRecReg() {
     event.preventDefault();
     window.location.href='/receiversRegistration.php';
 }
 
+//This function redirects to home page on click of home
 function moveToHome(){
     event.preventDefault();
     window.location.href='/index.php';
 }
 
+//This function is used to preventDefaults
 function preventDefaults(){
     event.preventDefault();
 }
 
+//This functions logsOut the user
 function logOut(){
     event.preventDefault();
     window.location.href='/index.php';
 }
 
+//This function redirect to the allBloodGroup page
+$(function() {
+    $('#show-blood-bank-data-btn').click(function(e) {
+        window.location.href='/showAllBloodBankData.php';
+        e.preventDefault();
+        
+    });
+});
+
+//This function sets the nav bar button according to the respective page
 function navBarOnLoad(login, logout, home, showAllBloodBanks){
     $('.sign-in-btn').attr('hidden',!login);
     $('.log-out-btn').attr('hidden',!logout);
@@ -177,35 +192,9 @@ $(function() {
     });
 });
 
-//This function is for trial
-$(function() {
-    $('#show-blood-bank-data-btn').click(function(e) {
-        console.log('i m here');
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: './backend/controller.php',
-            data: {
-                function2call: "doSomething",
-                dat: {
-
-                }
-            },
-            success: function(data) {
-                Swal.fire({
-                    'title': 'Successful',
-                    'text': data,
-                    'type': 'success'
-                })
-
-            }
-        });
-    });
-});
-
 //This function converts json into an array of blood groups and their quantities
-function getBloodGroupArray(data){
-    var json = jQuery.parseJSON(data);
+function getBloodGroupArray(json){
+    console.log(json);
     var arr = [];
     arr.push({
         BloodGroupName: 'Ap',
@@ -249,7 +238,41 @@ function getBloodGroupArray(data){
     });
     return arr;
 }
+function addBloodGroupDetails(arr, selector){
+    $.each(arr, function(index, value) {
+        var $newRow = $(`<tr>
+            <th scope="row">
+                <label for="blood-group-${value.BloodGroup}" class="form-label">${value.BloodGroup}</label>
+            </th>
+            <td>
+                <input type="number" id="${value.BloodGroupName}" class="form-control blood-group ${value.BloodGroupName}" value="${value.Quantity}"  readonly="true"/>
+            </td>
+        </tr>`);
+        selector.append($newRow);
+    });
+}
+function createBloodGroupTable(a,email,HospitalName,selector){
+    var newTable = $(`<div class="card-body" style="width: 24rem;">
+                        <h5 class="card-title" id="${email}">${HospitalName}</h5>
+                        <form class="card-text">
+                            <table class="table table-hover" id="hospital-blood-group">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Blood Group</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hospital-blood-group-table-${a}">
+                                    
+                                </tbody>
+                            </table>
 
+                            <button type="submit" class="btn btn-primary" id="edit-blood-bank-table">Edit</button>
+                            <button type="submit" class="btn btn-primary" id="save-blood-bank-table" hidden="true">Save</button>
+                        </form>
+                    </div>`);
+    selector.append(newTable);
+}
 //This function is for retrieving hospital blood groups available
 function getBloodGrpsForHospital(){
     var function2call = 'getAllBloodGrps';
@@ -265,19 +288,10 @@ function getBloodGrpsForHospital(){
         },
         success: function(data) {
             if (data) {
-                var arr = getBloodGroupArray(data);
-                var add = $('#hospital-blood-group-table');
-                $.each(arr, function(index, value) {
-                    var $newRow = $(`<tr>
-                        <th scope="row">
-                            <label for="blood-group-${value.BloodGroup}" class="form-label">${value.BloodGroup}</label>
-                        </th>
-                        <td>
-                            <input type="number" id="${value.BloodGroupName}" class="form-control blood-group ${value.BloodGroupName}" value="${value.Quantity}"  readonly="true"/>
-                        </td>
-                    </tr>`);
-                    add.append($newRow);
-                });
+                var json = JSON.parse(data);
+                var arr = getBloodGroupArray(json);
+                var selector = $('#hospital-blood-group-table');
+                addBloodGroupDetails(arr,selector);
             } else {
                 console.log(data);
             }
@@ -342,57 +356,52 @@ $(function(){
     });
 });
 
+
+
+function handleAllJson(data){
+    var json = JSON.parse(data);
+    //console.log(json);
+    for(var a in json){
+        var email = json[a].email;
+        var HospitalName = json[a].HospitalName;
+        var bloodGroupsAv = json[a].BloodGroupsAvailable;
+        var selector = $('.complete-body');
+        createBloodGroupTable(a,email,HospitalName,selector);
+
+        selector = $(`#hospital-blood-group-table-${a}`);
+        var arr = getBloodGroupArray(bloodGroupsAv);
+        addBloodGroupDetails(arr,selector);
+    }
+}
+
+
+
 //This function is for showing all blood banks data
-$(function() {
-    $('#show-blood-bank-data-btn').click(function(e) {
-        e.preventDefault();
-        console.log('i m here');
-        var function2call = 'getAllBloodBanks';
-        $.ajax({
-            type: 'POST',
-            url: './backend/getAllBloodBanks.php',
-            data: {
-                function2call: function2call,
-                data:{
-                    empty:'empty'
-                }
-            },
-            success: function(data) {
-                window.location.href='/showAllBloodBankData.php';
-                console.log(data);
-            },
-            error: function(data) {
-                Swal.fire({
-                    'title': 'Errors',
-                    'text': 'There were errors while saving the data.',
-                    'type': 'error'
-                })
+function getAllBloodGrps(){
+    var function2call = 'getAllBloodBanks';
+    $.ajax({
+        type: 'POST',
+        url: './backend/controller.php',
+        data: {
+            function2call: function2call,
+            data:{
+                empty:'empty'
             }
-        });
+        },
+        success: function(data) {
+            handleAllJson(data);
+        },
+        error: function(data) {
+            Swal.fire({
+                'title': 'Errors',
+                'text': 'There were errors while saving the data.',
+                'type': 'error'
+            })
+        }
     });
-});
-
-    
+}
                 
-    //             var $newTable = $(`<div class="card-body" style="width: 24rem;">
-    //                                     <h5 class="card-title">${HospitalName}</h5>
-    //                                     <form class="card-text">
-    //                                         <table class="table table-hover" id="hospital-blood-group">
-    //                                             <thead>
-    //                                                 <tr>
-    //                                                     <th scope="col">Blood Group</th>
-    //                                                     <th scope="col">Quantity</th>
-    //                                                 </tr>
-    //                                             </thead>
-    //                                             <tbody id="hospital-blood-group-table">
-                                                    
-    //                                             </tbody>
-    //                                         </table>
-
-    //                                         <button type="submit" class="btn btn-primary" id="edit-blood-bank-table">Edit</button>
-    //                                         <button type="submit" class="btn btn-primary" id="save-blood-bank-table" hidden="true">Save</button>
-    //                                     </form>
-    //                                 </div>`);
+                
     //             var add = $('#hospital-blood-group-table');
     //             $.each(arr, function(index, value) {
     //                 var $newRow = $(`
