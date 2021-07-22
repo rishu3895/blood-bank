@@ -48,8 +48,3 @@ How to send:
 Please zip the assignment, upload on google drive and share the (publicly accessible) google drive link
 only. Please make sure you include the SQL file so that we can replicate your database.
 
-
-What I have to do:
--validating inputs for sign up of hospital
-- connect to the mysql server whenever someone signs up for hospital.
-INSERT INTO `Users` (`Name`, `email`, `password`) VALUES ('Rishabh', 'rishabh.sharma@gmail.com', 'abc123abc');

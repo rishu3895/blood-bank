@@ -22,7 +22,7 @@
         <a class="navbar-brand">
             <img class="logo blood-logo" src="/images/bloodBankIcon.png" alt="blood bank icon"/>
         </a>
-        <form class="d-flex">
+        <form class="d-flex nav-bar-btn-class" >
             <button type="button" class="btn btn-primary nav-btn sign-in-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Sign in
             </button>

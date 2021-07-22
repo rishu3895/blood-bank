@@ -492,4 +492,36 @@ function getAllBloodGrps(disable) {
         }
     });
 }
+//This function is for adding the view request button on hospital home 
+function addViewRequestBtn(){
+    var viewRequestBtn = $(`<button type="button" class="btn btn-primary nav-btn nav-bar-view-request" style="margin-left:10px;">
+            View Blood Requests
+        </button>`);
+    var selector = $('.nav-bar-btn-class');
+    selector.append(viewRequestBtn);
+}
+function addHomeBtn(){
+    var viewHomeBtn = $(`<button type="button" class="btn btn-primary nav-btn nav-bar-home-btn" style="margin-left:10px;">
+            Home
+        </button>`);
+    var selector = $('.nav-bar-btn-class');
+    selector.append(viewHomeBtn);
+}
+$(function(){
+    $('.nav-bar-home-btn').click(function (e){
+        event.preventDefault();
+        window.location.href = '/hospitalHome.php';
+    });
+});
+$(function(){
+    $('.nav-bar-view-request').click(function (e){
+        event.preventDefault();
+        window.location.href = '/viewBloodRequests.php';
+    });
+});
 
+$(function(){
+    $('.view-blood-requests-class').on('load',(function(){
+        console.log('finally it works');
+    }));
+});
