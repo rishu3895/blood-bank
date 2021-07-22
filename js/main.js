@@ -501,15 +501,23 @@ function addHomeBtn(){
     selector.append(viewHomeBtn);
 }
 //on click events
+//on click events
+// This function is to redirect to viewBloodRequest page
 $(function(){
     $('.nav-bar-view-request').click(function (e){
         event.preventDefault();
         window.location.href = '/viewBloodRequests.php';
     });
+});
+// This function is to redirect to hospitalHome
+$(function(){
     $('.nav-bar-home-btn').click(function (e){
         event.preventDefault();
         window.location.href = '/hospitalHome.php';
     });
+});
+//This function is to redirect to showAllBloodBankData
+$(function(){
     $('#show-blood-bank-data-btn').click(function (e) {
         e.preventDefault();
         window.location.href = '/showAllBloodBankData.php';
