@@ -2,10 +2,10 @@
     
     // To send database request
     function sendRequest($sql){
-        $db_host = "localhost";
-        $db_user = "root";
-        $db_pass = "abc@123";
-        $db_name = "Users";
+        $db_host = "kfgk8u2ogtoylkq9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+        $db_user = "goan6oesk3q0ukf0";
+        $db_pass = "aamjq19ksa7rkdq0";
+        $db_name = "lxr7vz8ummjrs3rw";
         $db = new PDO('mysql:host='.$db_host.';dbname=' . $db_name . ';charset=utf8', $db_user, $db_pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $db->prepare($sql);
