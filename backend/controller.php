@@ -14,6 +14,7 @@ require_once('processRequests.php');
                 case 'getAllBloodGrps'      : getAllBloodGrps($data)     ;break;
                 case 'getAllBloodBanks'     : getAllBloodBanks($data)    ;break;
                 case 'sendBloodReq'         : sendBloodReq($data)        ;break;
+                case 'getBloodReq'          : getBloodReq($data)         ;break;
             }
         }
         

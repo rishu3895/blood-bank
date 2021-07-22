@@ -70,14 +70,7 @@ function logOut() {
     window.location.href = '/index.php';
 }
 
-//This function redirect to the allBloodGroup page
-$(function () {
-    $('#show-blood-bank-data-btn').click(function (e) {
-        window.location.href = '/showAllBloodBankData.php';
-        e.preventDefault();
 
-    });
-});
 
 //This function sets the nav bar button according to the respective page
 function navBarOnLoad(login, logout, home, showAllBloodBanks) {
@@ -507,21 +500,63 @@ function addHomeBtn(){
     var selector = $('.nav-bar-btn-class');
     selector.append(viewHomeBtn);
 }
-$(function(){
-    $('.nav-bar-home-btn').click(function (e){
-        event.preventDefault();
-        window.location.href = '/hospitalHome.php';
-    });
-});
+//on click events
 $(function(){
     $('.nav-bar-view-request').click(function (e){
         event.preventDefault();
         window.location.href = '/viewBloodRequests.php';
     });
+    $('.nav-bar-home-btn').click(function (e){
+        event.preventDefault();
+        window.location.href = '/hospitalHome.php';
+    });
+    $('#show-blood-bank-data-btn').click(function (e) {
+        e.preventDefault();
+        window.location.href = '/showAllBloodBankData.php';
+    });
 });
 
-$(function(){
-    $('.view-blood-requests-class').on('load',(function(){
-        console.log('finally it works');
-    }));
-});
+function createBloodRequestRows(arr, selector) {
+    
+    $.each(arr, function (index, value) {
+        var $newRow = $(`<tr>
+            <th scope="row">
+                <label class="form-label">${value['recName']}</label>
+            </th>
+            <td>
+                <label class="form-label">${value['recEmail']}</label>
+            </td>
+            <td>
+                <label class="form-label">${value['recBloodGrp']}</label>
+            </td>
+            <td>
+                <label class="form-label">${value['recBloodQuantity']}</label>
+            </td>
+        </tr>`);
+        selector.append($newRow);
+    });
+}
+
+function handleBloodRequestData(data){
+    var selector = $('.hospital-blood-group-requests');
+    createBloodRequestRows(data,selector);
+}
+//This function is for retrieving the blood reqest data from database
+function viewBloodRequests(){
+    var function2call = 'getBloodReq';
+    $.ajax({
+        type: 'POST',
+        url : './backend/controller.php',
+        data: {
+            function2call: function2call,
+            data:{
+                empty: 'empty'
+            }
+        },
+        success: function (data) {
+            //console.log(data);
+            handleBloodRequestData(JSON.parse(data));
+        }
+        
+    });
+}

@@ -177,3 +177,45 @@
             echo 'There were errors while requesting the blood group.';
         }
     }
+    function getBloodReqReceiverData($data){
+        $sql = "SELECT `id`, `name`, `email`,`bloodGroup`, `PhoneNumber` FROM `ReceiverUsers` WHERE id IN (".implode(',',$data).")";
+        $stmt = sendRequest($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    function getBloodReq($data){
+        session_start();
+        $hospitalId = $_SESSION['id'];
+        
+        $sql = "SELECT * FROM `BloodSampleRequests` WHERE HospitalUser=?";
+        $stmt = sendRequest($sql);
+        $stmt->execute([$hospitalId]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $userIds =  array(); 
+        foreach ($result as $value) {
+            array_push($userIds,$value['ReceiverUser']); 
+        }
+        $result2 = getBloodReqReceiverData($userIds);
+
+        $finalReturnVal = array();
+        foreach ($result2 as $value) {
+            $recId = $value['id'];
+            $recName = $value['name'];
+            $recEmail  = $value['email'];
+            foreach ($result as $val) {
+                if($val['ReceiverUser'] == $recId){
+                    
+                    $row = array('recId' => $recId, 
+                                'recEmail' => $recEmail, 
+                                'recName' => $recName, 
+                                'recBloodGrp' => $val['BloodType'], 
+                                'recBloodQuantity' => $val['Quantity']);
+                    array_push($finalReturnVal, $row);
+                }
+            }
+        }
+
+        echo json_encode($finalReturnVal);
+        
+    }
